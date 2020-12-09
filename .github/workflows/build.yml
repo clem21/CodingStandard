@@ -30,7 +30,7 @@ jobs:
 
     env:
       APP_ENV: test_cached
-      ECS_VERSION: ["^7:0", "^8.0"]
+      ECS_VERSION: 7:0
 
     steps:
       -
