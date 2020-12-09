@@ -52,10 +52,6 @@ jobs:
           node-version: "${{ matrix.node }}"
 
       -
-        name: Shutdown default MySQL
-        run: sudo service mysql stop
-
-      -
         name: Setup MySQL
         uses: mirromutth/mysql-action@v1.1
         with:
@@ -69,10 +65,6 @@ jobs:
       -
         name: Install certificates
         run: symfony server:ca:install
-
-      -
-        name: Run Chrome Headless
-        run: google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1 > /dev/null 2>&1 &
 
       -
         name: Get Composer cache directory
@@ -92,19 +84,6 @@ jobs:
         run: composer install --no-interaction
 
       -
-        name: Prepare test application assets
-        run: |
-          bin/console assets:install public -vvv
-
-      -
-        name: Prepare test application cache
-        run: bin/console cache:warmup -vvv
-
-      -
-        name: Load fixtures
-        run: bin/console sylius:fixtures:load -n
-
-      -
         name: Validate composer.json
         run: composer validate --ansi --strict
 
@@ -116,6 +95,3 @@ jobs:
         name: Run PHPStan
         run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
 
-      -
-        name: Run PHPUnit
-        run: vendor/bin/phpunit --colors=always
