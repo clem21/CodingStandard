@@ -29,7 +29,6 @@ jobs:
             mysql: 8.0
 
     env:
-      APP_ENV: test_cached
       ECS_VERSION: 7:0
 
     steps:
@@ -92,6 +91,5 @@ jobs:
         run: symfony security:check
 
       -
-        name: Run PHPStan
-        run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
-
+        name: Run test
+        run: vendor/bin/ecs check tests
